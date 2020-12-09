@@ -16,10 +16,10 @@ app.get('/mario', async (req, res) => {
     res.send(await marioModel.find());
 });
 
-app.get('mario/:id', async (req, res) => {
+app.get('/mario/:id', async (req, res) => {
     const id = req.params.id;
     try {
-        res.send(await marioModel.findOne({ id }));
+        res.send(await marioModel.findById(id));
     }
     catch (error) {
         res.status(400).send({ message: error.message });
@@ -27,7 +27,7 @@ app.get('mario/:id', async (req, res) => {
 
 });
 
-const isNullOrUndefined = (val) => val === null && val === undefined;
+const isNullOrUndefined = (val) => val === null || val === undefined;
 
 app.post('/mario', async (req, res) => {
     const newMario = req.body;
@@ -37,7 +37,7 @@ app.post('/mario', async (req, res) => {
     } else {
         const newMarioDocument = new marioModel(newMario);
         await newMarioDocument.save();
-        res.send(newMarioDocument);
+        res.status(201).send(newMarioDocument);
     }
 });
 
@@ -69,7 +69,7 @@ app.delete('/mario/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
-        const existingMario = await marioModel.findById(id);
+        await marioModel.findById(id);
         await marioModel.deleteOne({ '_id': id });
         res.status(200).send({ message: 'character deleted' });
     }
