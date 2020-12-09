@@ -6,6 +6,6 @@ const marioSchema = new mongoose.Schema({
     weight: Number
 });
 
-const marioModel = new mongoose.Model('marioChar', marioSchema);
+const marioModel = mongoose.model('marioChar', marioSchema);
 
 module.exports = marioModel;

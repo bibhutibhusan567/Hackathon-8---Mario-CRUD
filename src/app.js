@@ -65,7 +65,7 @@ app.patch('/mario/:id', async (req, res) => {
     }
 });
 
-app.delete('/mario/:id', (req, res) => {
+app.delete('/mario/:id', async (req, res) => {
     const id = req.params.id;
 
     try {
